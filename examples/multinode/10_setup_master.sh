@@ -7,6 +7,5 @@ sudo /etc/init.d/puppetmaster stop; \
 sudo rm -rf /etc/puppet/modules; \
 sudo ln -s /vagrant/modules /etc/puppet/modules; \
 sudo ln -s /vagrant/site.pp /etc/puppet/manifests/site.pp; \
-sudo chown -R puppet:puppet /var/lib/puppet; \
 sudo /etc/init.d/puppetmaster start; \
 sudo puppet agent -t"
