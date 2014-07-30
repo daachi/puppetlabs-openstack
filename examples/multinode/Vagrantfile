@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "puppetlabs/centos-65-x64-openstack"
+  config.vm.box = "puppetlabs/debian-7.4-64-puppet"
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = false
@@ -22,8 +22,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     puppet.vm.synced_folder "../../", "/openstack"
 
-    puppet.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "1024"
+    puppet.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
 
@@ -37,8 +37,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     control.vm.synced_folder "../../", "/openstack"
 
-    control.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "1024"
+    control.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
 
@@ -52,8 +52,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     storage.vm.synced_folder "../../", "/openstack"
 
-    storage.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "1024"
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
 
@@ -67,8 +67,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     network.vm.synced_folder "../../", "/openstack"
 
-    network.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "1024"
+    network.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
 
@@ -82,8 +82,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     compute.vm.synced_folder "../../", "/openstack"
 
-    compute.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "2048"
+    compute.vm.provider "virtualbox" do |v|
+      v.memory = 1024
     end
   end
 
@@ -97,8 +97,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     swiftstore1.vm.synced_folder "../../", "/openstack"
 
-    swiftstore1.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "1024"
+    swiftstore1.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
 
@@ -112,8 +112,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     swiftstore2.vm.synced_folder "../../", "/openstack"
 
-    swiftstore2.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "1024"
+    swiftstore2.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
 
@@ -127,8 +127,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     swiftstore3.vm.synced_folder "../../", "/openstack"
 
-    swiftstore3.vm.provider "vmware_fusion" do |v|
-        v.vmx["memsize"] =  "512"
+    swiftstore3.vm.provider "virtualbox" do |v|
+      v.memory = 1024
     end
   end
 
@@ -142,47 +142,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     tempest.vm.synced_folder "../../", "/openstack"
 
-    tempest.vm.provider "vmware_fusion" do |v|
-      v.vmx["memsize"] = "512"
+    tempest.vm.provider "virtualbox" do |v|
+      v.memory = 512
     end
   end
-
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider :virtualbox do |vb|
-  #   # Don't boot with headless mode
-  #   vb.gui = true
-  #
-  #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
-  #
-  # View the documentation for the provider you're using for more
-  # information on available options.
-
-  # Enable provisioning with Puppet stand alone.  Puppet manifests
-  # are contained in a directory path relative to this Vagrantfile.
-  # You will need to create the manifests directory and a manifest in
-  # the file base.pp in the manifests_path directory.
-  #
-  # An example Puppet manifest to provision the message of the day:
-  #
-  # # group { "puppet":
-  # #   ensure => "present",
-  # # }
-  # #
-  # # File { owner => 0, group => 0, mode => 0644 }
-  # #
-  # # file { '/etc/motd':
-  # #   content => "Welcome to your Vagrant-built virtual machine!
-  # #               Managed by Puppet.\n"
-  # # }
-  #
-  # config.vm.provision :puppet do |puppet|
-  #   puppet.manifests_path = "manifests"
-  #   puppet.manifest_file  = "site.pp"
-  # end
 
 end
