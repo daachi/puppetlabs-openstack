@@ -1,2 +1,4 @@
 examples/allinone/Puppetfile
 examples/multinode/Puppetfile
+*.swp
+*.swo
