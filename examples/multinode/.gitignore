@@ -1,3 +1,5 @@
 .rvmrc
 modules
 .vagrant
+*.swp
+*.swo
