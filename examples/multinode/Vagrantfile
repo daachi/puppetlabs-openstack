@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     puppet.vm.synced_folder "../../", "/openstack"
 
-    puppet.vm.provision :shell, :path => "10_setup_master.sh"
+    puppet.vm.provision :shell, :path => "./scripts/provision/setup_puppet_master.sh"
 
     puppet.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024"]
@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     control.vm.synced_folder "../../", "/openstack"
 
-    control.vm.provision :shell, :path => "11_add_debian_repos.sh"
+    control.vm.provision :shell, :path => "./scripts/provision/add_openstack_repos.sh"
 
     control.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     storage.vm.synced_folder "../../", "/openstack"
 
-    storage.vm.provision :shell, :path => "11_add_debian_repos.sh"
+    storage.vm.provision :shell, :path => "./scripts/provision/add_openstack_repos.sh"
 
     config.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--memory", "512"]
@@ -76,8 +76,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     network.vm.synced_folder "../../", "/openstack"
 
-    network.vm.provision :shell, :path => "11_add_debian_repos.sh"
-    network.vm.provision :shell, :path => "backports_for_haproxy.sh"
+    network.vm.provision :shell, :path => "./scripts/provision/add_openstack_repos.sh"
+    network.vm.provision :shell, :path => "./scripts/provision/backports_for_haproxy.sh"
 
     network.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -96,7 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     compute.vm.synced_folder "../../", "/openstack"
 
-    compute.vm.provision :shell, :path => "11_add_debian_repos.sh"
+    compute.vm.provision :shell, :path => "./scripts/provision/add_openstack_repos.sh"
 
     compute.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024"]
