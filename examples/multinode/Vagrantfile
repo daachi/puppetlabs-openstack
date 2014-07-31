@@ -5,7 +5,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "puppetlabs/debian-7.4-64-puppet"
+  # config.vm.box = "puppetlabs/debian-7.4-64-puppet"
+  config.vm.box = "debian.openstack"
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = false
@@ -22,8 +23,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     puppet.vm.synced_folder "../../", "/openstack"
 
-    puppet.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    puppet.vm.provision :shell, :path => "10_setup_master.sh"
+
+    puppet.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
     end
   end
 
@@ -37,8 +40,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     control.vm.synced_folder "../../", "/openstack"
 
-    control.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    control.vm.provision :shell, :path => "11_add_debian_repos.sh"
+
+    control.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
     end
   end
 
@@ -52,8 +59,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     storage.vm.synced_folder "../../", "/openstack"
 
-    config.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    storage.vm.provision :shell, :path => "11_add_debian_repos.sh"
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
 
@@ -67,8 +76,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     network.vm.synced_folder "../../", "/openstack"
 
-    network.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    network.vm.provision :shell, :path => "11_add_debian_repos.sh"
+    network.vm.provision :shell, :path => "backports_for_haproxy.sh"
+
+    network.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
     end
   end
 
@@ -82,8 +96,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     compute.vm.synced_folder "../../", "/openstack"
 
-    compute.vm.provider "virtualbox" do |v|
-      v.memory = 1024
+    compute.vm.provision :shell, :path => "11_add_debian_repos.sh"
+
+    compute.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
     end
   end
 
@@ -97,8 +113,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     swiftstore1.vm.synced_folder "../../", "/openstack"
 
-    swiftstore1.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    swiftstore1.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
 
@@ -112,8 +128,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     swiftstore2.vm.synced_folder "../../", "/openstack"
 
-    swiftstore2.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    swiftstore2.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
 
@@ -127,8 +143,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     swiftstore3.vm.synced_folder "../../", "/openstack"
 
-    swiftstore3.vm.provider "virtualbox" do |v|
-      v.memory = 1024
+    swiftstore3.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
 
@@ -142,8 +158,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     tempest.vm.synced_folder "../../", "/openstack"
 
-    tempest.vm.provider "virtualbox" do |v|
-      v.memory = 512
+    tempest.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
 
