@@ -11,8 +11,8 @@ mod "swift",
   :ref => "master"
 
 mod "glance",
-  :git => "git://github.com/stackforge/puppet-glance",
-  :ref => "master"
+  :git => "git://github.com/daachi/puppet-glance",
+  :ref => "works_with_debian"
 
 mod "cinder",
   :git => "git://github.com/stackforge/puppet-cinder",
