@@ -1,12 +1,17 @@
 # The profile to set up a neutron ovs network router
 class openstack::profile::neutron::router {
-  Exec { 
-    path => '/usr/bin:/usr/sbin:/bin:/sbin', 
-    require => Class['openstack::profile::neutron::common'],
-  } 
-  
-  ::sysctl::value { 'net.ipv4.ip_forward': 
-    value     => '1',
+
+  Exec {
+    path => '/usr/bin:/usr/sbin:/bin:/sbin',
+  }
+
+  exec { "reset-openvswitch":
+    command => '/etc/init.d/openvswitch-switch restart',
+    require => Package['openvswitch-switch'],
+  }
+
+  ::sysctl::value { 'net.ipv4.ip_forward':
+    value => '1',
   }
 
   $controller_management_address = $::openstack::config::controller_address_management
@@ -66,9 +71,12 @@ class openstack::profile::neutron::router {
   $external_bridge = 'brex'
   $external_network = $::openstack::config::network_external
   $external_device = device_for_network($external_network)
+
   vs_bridge { $external_bridge:
-    ensure => present,
+    ensure  => present,
+    require => Exec["reset-openvswitch"],
   }
+
   if $external_device != $external_bridge {
     vs_port { $external_device:
       ensure  => present,

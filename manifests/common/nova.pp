@@ -40,7 +40,7 @@ class openstack::common::nova ($is_compute    = false) {
 
   class { [
     'nova::scheduler',
-    'nova::objectstore',
+    # 'nova::objectstore',
     'nova::cert',
     'nova::consoleauth',
     'nova::conductor'
